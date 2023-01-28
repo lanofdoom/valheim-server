@@ -1,14 +1,25 @@
 # LAN of DOOM Valheim Server
+
 Docker image for a private Valheim server as used by the LAN of DOOM.
 
 # Installation
-Run ``docker pull ghcr.io/kleinpa/valheim-server:latest``
+
+Run `docker pull ghcr.io/lanofdoom/valheim-server:latest`
 
 # Environmental Variables
-``NAME`` The name of the server as listed in the server browser.
 
-``PASSWORD`` The password users must enter in order to join the server.
+`GAME_NAME` The name of the server (default `LAN of DOOM`)
 
-``WORLD`` The first map to run on the server.
+`GAME_WORLD` (default `Dedicated`)
 
-``PORT`` The port to use for the server. ``2456`` by default.
+`GAME_PASSWORD` The password users must enter in order to join the server. (default ` `)
+
+`PORT` The port to use for the server. (default `2456`)
+
+# Networking
+
+By default the game listens on `$PORT/udp` and the steam query service uses `$PORT+1/udp`.
+
+# Game Data
+
+Persistent data is stored in the container's `/data` directory.

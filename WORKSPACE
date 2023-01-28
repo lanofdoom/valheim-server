@@ -49,7 +49,8 @@ steamcmd_nugets()
 
 container_pull(
     name = "base_image",
+    # tag = "bullseye-slim",
+    digest = "sha256:1acb06a0c31fb467eb8327ad361f1091ab265e0bf26d452dea45dcb0c0ea5e75",
     registry = "index.docker.io",
-    repository = "i386/debian",
-    tag = "bullseye-slim",
+    repository = "debian",
 )

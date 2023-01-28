@@ -1,7 +1,10 @@
-#!/bin/bash -ue
+#!/bin/sh -ue
 
-# why?
-export SteamAppID=892970 
+export LD_LIBRARY_PATH=/opt/game:/opt/game/linux64:${LD_LIBRARY_PATH:-}
+export SteamAppId=892970
 
-export LD_LIBRARY_PATH="/opt/game:/opt/game/linux64:${LD_LIBRARY_PATH:-}"
-/opt/game/valheim_server.x86_64 -name "${NAME:-name}" -port "${PORT:-2456}" -nographics -batchmode -world "${WORLD:-LAN of DOOM}" -password "${PASSWORD:-}" -public 1
+/opt/game/valheim_server.x86_64 -public 0 \
+  -name "${GAME_NAME:-LAN of DOOM}" \
+  -port ${PORT:-2456} \
+  -world "${GAME_WORLD:-Dedicated}" \
+  -password "${GAME_PASSWORD:-}" 
