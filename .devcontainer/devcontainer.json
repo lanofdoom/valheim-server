@@ -1,0 +1,5 @@
+{
+	"features": {
+		"ghcr.io/balazs23/devcontainers-features/bazel:1": {}
+	}
+}
