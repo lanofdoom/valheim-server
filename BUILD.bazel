@@ -1,0 +1,64 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load", "oci_push")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+pkg_tar(
+    name = "valheim_layer",
+    srcs = ["@valheim//:files"],
+    package_dir = "/opt/game",
+    symlinks = {
+        "/root/.config/unity3d/IronGate/Valheim": "/data",
+    },
+)
+
+pkg_tar(
+    name = "entrypoint_layer",
+    srcs = [":entrypoint.sh"],
+    package_dir = "/",
+    symlinks = {
+        "/root/.steam/sdk32/steamclient.so": "/opt/game/bin/steamclient.so",
+    },
+)
+
+pkg_tar(
+    name = "ca_certs",
+    srcs = ["ca-certificates.crt"],
+    package_dir = "/etc/ssl/certs",
+)
+
+oci_image(
+    name = "image",
+    base = "@debian_linux_amd64",
+    entrypoint = ["/entrypoint.sh"],
+    env = {
+        "GAME_NAME": "LAN of DOOM",
+        "GAME_WORLD": "Dedicated",
+        "GAME_PASSWORD": "",
+        "PORT": "2456",
+    },
+    tars = [
+        ":valheim_layer",
+        ":entrypoint_layer",
+        ":ca_certs",
+    ],
+)
+
+oci_load(
+    name = "image_tarball",
+    image = ":image",
+    repo_tags = ["valheim-server:bazel"],
+)
+
+oci_push(
+    name = "image_push",
+    image = ":image",
+    remote_tags = ["latest"],
+    repository = "ghcr.io/lanofdoom/valheim-server",
+)
+
+build_test(
+    name = "build_test",
+    targets = [
+        ":image",
+    ],
+)

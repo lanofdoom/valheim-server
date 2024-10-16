@@ -1,0 +1,29 @@
+module(name = "satisfactory_server")
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_distroless", version = "0.3.8")
+bazel_dep(name = "rules_oci", version = "2.0.0")
+bazel_dep(name = "rules_pkg", version = "1.0.1")
+bazel_dep(name = "rules_steam")
+
+git_override(
+    module_name = "rules_steam",
+    commit = "6b921577dbb0f77d3ff4ea20c61e2023deec77c4",
+    remote = "https://github.com/lanofdoom/rules_steam.git",
+)
+
+steam = use_extension("@rules_steam//:steam.bzl", "steam")
+steam.app(
+    name = "valheim",
+    app = "896660",  # valheim
+)
+use_repo(steam, "valheim")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "debian",
+    image = "docker.io/library/debian",
+    platforms = ["linux/amd64"],
+    tag = "bookworm-slim",
+)
+use_repo(oci, "debian", "debian_linux_amd64")

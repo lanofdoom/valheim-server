@@ -4,7 +4,7 @@ game_name="local"
 game_root=$HOME/.local/share/valheim/${game_name}
 mkdir -p ${game_root}
 
-bazel run //:server_image && docker run --rm -it \
+bazel run //:image_tarball && docker run --rm -it \
     --name valheim-server \
     --cap-add=sys_nice \
     --stop-timeout 120 \
@@ -12,4 +12,4 @@ bazel run //:server_image && docker run --rm -it \
     -v ${game_root}:/data \
     -e GAME_NAME=${game_name} \
     -e GAME_PASSWORD="test" \
-    bazel:server_image 
+    valheim-server:bazel
