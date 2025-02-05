@@ -1,7 +1,7 @@
 module(name = "satisfactory_server")
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "rules_distroless", version = "0.4.2")
+bazel_dep(name = "rules_distroless", version = "0.5.1")
 bazel_dep(name = "rules_oci", version = "2.2.1")
 bazel_dep(name = "rules_pkg", version = "1.0.1")
 bazel_dep(name = "rules_steam", version = "0.0.0")
