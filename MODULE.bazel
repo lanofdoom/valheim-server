@@ -8,7 +8,7 @@ bazel_dep(name = "rules_steam", version = "0.0.0")
 
 git_override(
     module_name = "rules_steam",
-    commit = "df9431435c3b4e8825f8a94071a85338e00ca9d7",
+    commit = "4482f95922011000c747aeb9ded942e9e4e3e1dd",
     remote = "https://github.com/lanofdoom/rules_steam.git",
 )
 
